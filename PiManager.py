@@ -1,5 +1,4 @@
-import serial
-import time
+"""Python script for Oculus RPi."""
 import os
 import paho.mqtt.client as mqtt
 import argparse
@@ -50,15 +49,15 @@ def execute(option, client):
         client.publish("Oculus", "predcition", qos=1, retain=True)
     elif option == '5':
         client.publish("Oculus", "ocr", qos=1, retain=True)
-    elif i == '6':
+    elif option == '6':
         pass
-    elif i == '7':
+    elif option == '7':
         pass
-    elif i == '8':
+    elif option == '8':
         pass
-    elif i == '*':
+    elif option == '*':
         os.system("msp")
-    elif i == '#':
+    elif option == '#':
         client.publish("Oculus", "terminate", qos=1, retain=True)
     else:
         pass
