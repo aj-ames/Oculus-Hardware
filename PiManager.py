@@ -22,7 +22,7 @@ port = 1883
 
 def mqttSetup():
     """Method to initialize MQTT."""
-    client = mqtt.Client("Oculus")
+    client = mqtt.Client("Oculus-Hardware")
     # set username and password
     client.username_pw_set(user, password=password)
     client.connect(broker_address, port)  # connect to broker
@@ -31,24 +31,26 @@ def mqttSetup():
 
 def clicker():
     """Click a picture in RPi."""
-    os.system("raspistill -o image.jpg")
+    os.system("raspistill -o ~/image/image.jpg")
 
 
 def execute(option, client):
     """Execute commands based on the input."""
     if option == '1':
         os.system("mst")
-        client.publish("Oculus", "object", qos=1, retain=True)
+        client.publish("Oculus", "object", qos=0, retain=False)
     elif option == '2':
         clicker()
-        client.publish("Oculus", "face", qos=1, retain=True)
+        client.publish("Oculus", "face", qos=0, retain=False)
     elif option == '3':
         clicker()
-        client.publish("Oculus", "currency", qos=1, retain=True)
+        client.publish("Oculus", "currency", qos=0, retain=False)
     elif option == '4':
-        client.publish("Oculus", "predcition", qos=1, retain=True)
+        clicker()
+        client.publish("Oculus", "predcition", qos=0, retain=False)
     elif option == '5':
-        client.publish("Oculus", "ocr", qos=1, retain=True)
+        clicker()
+        client.publish("Oculus", "ocr", qos=0, retain=False)
     elif option == '6':
         pass
     elif option == '7':
