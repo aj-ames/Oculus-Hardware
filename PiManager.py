@@ -16,9 +16,6 @@ COL = [12, 16, 18]
 
 register = 'z'
 
-brokerAddress = "192.168.0.7"
-port = 1883
-
 
 def mqttSetup():
     """Method to initialize MQTT."""
@@ -112,9 +109,9 @@ if __name__ == '__main__':
     port = int(port)
 
 client = mqttSetup()
+keypadInit()
 
 try:
-    keypadInit()
     while(True):
             for j in range(3):
                 GPIO.output(COL[j], 0)
@@ -131,3 +128,5 @@ try:
 
 except KeyboardInterrupt:
     GPIO.cleanup()
+    client.disconnect()
+    print("Exiting..")
