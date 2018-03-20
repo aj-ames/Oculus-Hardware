@@ -29,7 +29,7 @@ def execute(option):
         os.system("sudo /etc/init.d/motion start")
         client.publish("Oculus", "object", qos=0, retain=False)
     elif option == 2:
-        os.system("msp")
+        os.system("sudo /etc/init.d/motion stop")
         clicker()
         client.publish("Oculus", "face", qos=0, retain=False)
     elif option == 3:
