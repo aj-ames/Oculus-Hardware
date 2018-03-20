@@ -16,7 +16,7 @@ COL = [12, 16, 18]
 
 register = 'z'
 
-brokerAddress = "localhost"
+brokerAddress = "192.168.0.7"
 port = 1883
 
 
@@ -40,15 +40,19 @@ def execute(option, client):
         os.system("mst")
         client.publish("Oculus", "object", qos=0, retain=False)
     elif option == '2':
+        os.system("msp")
         clicker()
         client.publish("Oculus", "face", qos=0, retain=False)
     elif option == '3':
+        os.system("msp")
         clicker()
         client.publish("Oculus", "currency", qos=0, retain=False)
     elif option == '4':
+        os.system("msp")
         clicker()
         client.publish("Oculus", "predcition", qos=0, retain=False)
     elif option == '5':
+        os.system("msp")
         clicker()
         client.publish("Oculus", "ocr", qos=0, retain=False)
     elif option == '6':
