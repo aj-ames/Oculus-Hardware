@@ -17,39 +17,31 @@ COL = [12, 16, 18]
 register = 'z'
 
 
-def mqttSetup():
-    """Method to initialize MQTT."""
-    client = mqtt.Client("Oculus-Hardware")
-    # set username and password
-    client.username_pw_set(user, password=password)
-    client.connect(broker_address, port)  # connect to broker
-    return client
-
-
 def clicker():
     """Click a picture in RPi."""
     os.system("raspistill -o ~/image/image.jpg")
 
 
-def execute(option, client):
+def execute(option):
     """Execute commands based on the input."""
+    print(client)
     if option == 1:
-        os.system("mst")
+        os.system("sudo /etc/init.d/motion start")
         client.publish("Oculus", "object", qos=0, retain=False)
     elif option == 2:
         os.system("msp")
         clicker()
         client.publish("Oculus", "face", qos=0, retain=False)
     elif option == 3:
-        os.system("msp")
+        os.system("sudo /etc/init.d/motion stop")
         clicker()
         client.publish("Oculus", "currency", qos=0, retain=False)
     elif option == 4:
-        os.system("msp")
+        os.system("sudo /etc/init.d/motion stop")
         clicker()
         client.publish("Oculus", "predcition", qos=0, retain=False)
     elif option == 5:
-        os.system("msp")
+        os.system("sudo /etc/init.d/motion stop")
         clicker()
         client.publish("Oculus", "ocr", qos=0, retain=False)
     elif option == 6:
@@ -59,7 +51,7 @@ def execute(option, client):
     elif option == 8:
         pass
     elif option == '*':
-        os.system("msp")
+        os.system("sudo /etc/init.d/motion stop")
     elif option == '#':
         client.publish("Oculus", "terminate", qos=1, retain=True)
     else:
@@ -82,7 +74,7 @@ def get_args_values(args=None):
     parser = argparse.ArgumentParser(description="Arguments supported..")
     parser.add_argument('-H', '--host',
                         help='Broker IP',
-                        default='localhost')
+                        default='192.168.0.7')
     parser.add_argument('-p', '--port',
                         help='port of the Broker',
                         default='1883')
@@ -108,20 +100,23 @@ if __name__ == '__main__':
     broker_address, port, user, password = get_args_values(sys.argv[1:])
     port = int(port)
 
-client = mqttSetup()
+"""Method to initialize MQTT."""
+client = mqtt.Client("Oculus-Hardware")
+# set username and password
+client.username_pw_set(user, password=password)
+client.connect(broker_address, port)  # connect to broker
 keypadInit()
 
 try:
     while(True):
             for j in range(3):
                 GPIO.output(COL[j], 0)
-
                 for i in range(4):
                     if GPIO.input(ROW[i]) == 0:
                         if not register == MATRIX[i][j]:
                             register = MATRIX[i][j]
                             print(MATRIX[i][j])
-                            execute(register, client)
+                            execute(register)
                             while(GPIO.input(ROW[i]) == 0):
                                 pass
                 GPIO.output(COL[j], i)
