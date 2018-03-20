@@ -33,30 +33,30 @@ def clicker():
 
 def execute(option, client):
     """Execute commands based on the input."""
-    if option == '1':
+    if option == 1:
         os.system("mst")
         client.publish("Oculus", "object", qos=0, retain=False)
-    elif option == '2':
+    elif option == 2:
         os.system("msp")
         clicker()
         client.publish("Oculus", "face", qos=0, retain=False)
-    elif option == '3':
+    elif option == 3:
         os.system("msp")
         clicker()
         client.publish("Oculus", "currency", qos=0, retain=False)
-    elif option == '4':
+    elif option == 4:
         os.system("msp")
         clicker()
         client.publish("Oculus", "predcition", qos=0, retain=False)
-    elif option == '5':
+    elif option == 5:
         os.system("msp")
         clicker()
         client.publish("Oculus", "ocr", qos=0, retain=False)
-    elif option == '6':
+    elif option == 6:
         pass
-    elif option == '7':
+    elif option == 7:
         pass
-    elif option == '8':
+    elif option == 8:
         pass
     elif option == '*':
         os.system("msp")
